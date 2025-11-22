@@ -16,11 +16,27 @@ A Flask-based web application for tracking daily habits with a beautiful, respon
 - Python 3.8 or higher
 - pip (Python package manager)
 
-## Installation
+## Project Structure
 
-1. **Clone or download the project**
+```
+Raju_habit_tracker/
+├── app/                          ← Application code
+│   ├── appraju.py               ← Main Flask app
+│   ├── requirements.txt          ← Dependencies
+│   └── .gitignore
+├── docs/                         ← Documentation
+│   └── deployment/              ← Deployment guides
+│       ├── PYTHONANYWHERE_COMPLETE_GUIDE.md
+│       ├── RAILWAY_COMPLETE_GUIDE.md
+│       └── (other guides)
+└── README.md
+```
+
+## Installation (Local Development)
+
+1. **Navigate to app directory**
    ```bash
-   cd Raju_habit_tracker
+   cd Raju_habit_tracker/app
    ```
 
 2. **Create a virtual environment (recommended)**
@@ -96,8 +112,21 @@ http://localhost:5000
    gunicorn -w 4 -b 0.0.0.0:5000 appraju:app
    ```
 
-### Using Docker
+### Quick Deployment Options
 
+**PythonAnywhere (Recommended for Beginners):**
+- Easiest setup
+- 30 minutes to deploy
+- Free tier available
+- Read: `docs/deployment/PYTHONANYWHERE_COMPLETE_GUIDE.md`
+
+**Railway (Fast & Modern):**
+- 20 minutes to deploy
+- Automatic deployments
+- Free tier with $5 credit
+- Read: `docs/deployment/RAILWAY_COMPLETE_GUIDE.md`
+
+**Using Docker:**
 Create a `Dockerfile`:
 ```dockerfile
 FROM python:3.11-slim
@@ -117,33 +146,7 @@ docker build -t habit-tracker .
 docker run -e SECRET_KEY=your-key -p 5000:5000 habit-tracker
 ```
 
-### Using systemd (Linux/Mac)
 
-Create `/etc/systemd/system/habit-tracker.service`:
-```ini
-[Unit]
-Description=Habit Tracker Application
-After=network.target
-
-[Service]
-Type=notify
-User=www-data
-WorkingDirectory=/var/www/habit-tracker
-Environment="FLASK_ENV=production"
-Environment="SECRET_KEY=your-secure-key"
-ExecStart=/var/www/habit-tracker/venv/bin/gunicorn -w 4 -b 127.0.0.1:5000 appraju:app
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Enable and start:
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable habit-tracker
-sudo systemctl start habit-tracker
-```
 
 ## API Endpoints
 
